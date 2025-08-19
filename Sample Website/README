@@ -5,3 +5,8 @@ Everything is built with very basic ulilization of HTML and CSS, with only the m
 The contents represent a fake Non-Profit Company that tackles issues related to literacy.
 
 Files could function as the foundation for repurposing a wide variety of use cases, and will likely eventually serve as a more well rounded portfolio further into my acedemic carreer, unless I decide to utilize another website building service.
+
+
+If attempting to display website locally, download all files, and folders of images. 
+
+images-folder should be named 'images', and gallery-folder should be renamed 'gallery' and be maintained as a subfolder in 'images' so that all images get displayed as intended in your browser.
