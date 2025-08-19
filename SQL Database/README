@@ -3,3 +3,8 @@ Files contain SQL commands written to an Oracle APEX platform to create a sample
 Relational database schema that could be repurposed for a multitude of smaller use cases, has been processed through the normalization process out to the Third Normal Form.
 
 ERD file made with Draw.io showing basic structure of primary attributes, data types, primary and foreign key constraints, along with table relationships.
+
+
+master-doc file contains all commands, including making of all tables, and the generation of sample data for those table's attributes. 
+mk_table shows all commands for the creation of tables. 
+All sample data commands are seperated into individual files for ease of editing or repurposing of specific commands.
