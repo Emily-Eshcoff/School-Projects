@@ -1,0 +1,5 @@
+Files contain SQL commands written to an Oracle APEX platform to create a sample database schema for a real estate company that has contracts with outside freelance employees, and maintaining data on agents, clients, and property data.
+
+Relational database schema that could be repurposed for a multitude of smaller use cases, has been processed through the normalization process out to the Third Normal Form.
+
+ERD file made with Draw.io showing basic structure of primary attributes, data types, primary and foreign key constraints, along with table relationships.
