@@ -1,0 +1,217 @@
+start
+
+    declarations()
+
+        string first_name 
+        string last_name 
+        string employee_id 
+        num dependents 
+        num hours_worked 
+        num hourly_rate 
+        num base_pay
+        num base_hours
+        num overtime_hours 
+        num overtime_rate 
+        num overtime_pay
+        num gross_pay 
+        num state_tax_rate = 0.056
+        num federal_tax_rate = 0.079
+        num state_tax 
+        num federal_tax 
+        num total_tax
+        num net_pay
+        string paycheck
+
+        array emp_paystub[12]
+        array employee_file[6]
+
+        input_file emp_records 
+        output_file pay_stub
+
+        string check_end = "n"
+        string end_name = "zzz"
+
+        call get_ready()
+        
+    end declarations()
+
+
+
+    get_ready()
+
+        open emp_records "employee_records.dat"
+        open pay_stub "employee_paystubs.dat"
+
+        display string 
+            "Enter employee information to start payroll processing."
+        
+        display     
+
+            user_input employee_id,
+            user_input hours_worked;
+
+            for input employee_id get employee_id from emp_records
+
+        call read_record()
+
+    end get_ready()
+
+
+    read_record()
+
+        if not eof emp_records then
+            call validate_employee_record()
+            input employee_file[]
+        else
+            employee_id = "zzz"
+            check_end = "y"
+        endif
+
+        call detail_loop()
+    end read_record()
+
+
+    validate_employee_record()
+
+        if length(employee_file[]) < 6 then
+            display "Error: Incomplete employee record."
+            check_end = "y"
+        else
+            employee_id   = employee_file[0]
+            first_name    = employee_file[1]
+            last_name     = employee_file[2]
+            dependents    = employee_file[3]
+            hourly_rate   = employee_file[4]
+            overtime_rate = employee_file[5]
+        endif
+
+    end validate_employee_record()
+
+
+    detail_loop()
+
+        while check_end = "n"
+
+            call read_record()
+
+            if employee_id = end_name then
+                check_end = "y"
+                call finish()
+            else
+                call validate_employee_record()
+
+                input hours_worked
+
+                call calculate.base_and_overtime_calc()
+                call calculate.gross_net_calc()
+
+                call transaction()
+            endif
+
+        endwhile
+
+    end detail_loop()
+
+
+    module calculate
+
+        subroutine base_and_overtime_calc()
+
+            if hours_worked > 40 then
+                overtime_hours = hours_worked - 40
+                base_hours = 40
+            else
+                overtime_hours = 0
+                base_hours = hours_worked
+            endif
+
+        end subroutine base_and_overtime_calc()
+
+
+        subroutine gross_net_calc()
+
+            gross_pay = base_pay + overtime_pay
+            state_tax = gross_pay * state_tax_rate
+            federal_tax = gross_pay * federal_tax_rate
+            total_tax = state_tax + federal_tax
+            net_pay = gross_pay - total_tax
+
+        end subroutine gross_net_calc()
+
+    end module calculate
+
+
+    module transaction()
+
+        if net_pay > 0 then
+            call debit()
+            call credit()
+            if credit = "success" and debit = "success" then
+                call mk_paycheck()
+            else
+                call finish()
+            endif
+        else
+            call finish()
+        endif
+
+    end module transaction()
+
+
+    mk_paycheck()
+
+        paycheck = 
+            "Name: " + first_name + " " + last_name, 
+            "Employee ID: " + employee_id,
+            "Base Hours: " + base_hours,
+            "Overtime Hours: " + overtime_hours,
+            "Hourly Rate: " + hourly_rate, 
+            "Overtime Rate: " + overtime_rate,
+            "Base Pay: " + base_pay, 
+            "Overtime Pay: " + overtime_pay, 
+            "Gross Pay: " + gross_pay, 
+            "State Tax: " + state_tax, 
+            "Federal Tax: " + federal_tax, 
+            "Net Pay: " + net_pay;
+
+        call write_paystub()
+
+    end mk_paycheck()
+
+
+    write_paystub()
+
+        emp_paystub[0]  = first_name
+        emp_paystub[1]  = last_name
+        emp_paystub[2]  = employee_id
+        emp_paystub[3]  = dependents
+        emp_paystub[4]  = base_hours
+        emp_paystub[5]  = overtime_hours
+        emp_paystub[6]  = hourly_rate
+        emp_paystub[7]  = overtime_rate
+        emp_paystub[8]  = gross_pay
+        emp_paystub[9]  = state_tax
+        emp_paystub[10] = federal_tax
+        emp_paystub[11] = net_pay
+
+        output pay_stub emp_paystub[]
+
+    end write_paystub()
+
+
+    finish()
+
+        if paycheck = null then
+            display "Error generating paycheck, or there is no paycheck. Contact Supervisor for assistance."
+        else
+            close emp_records
+            close pay_stub
+            display "Payroll processing complete."
+            display paycheck
+
+    end finish()
+
+stop
+
+eof
+
