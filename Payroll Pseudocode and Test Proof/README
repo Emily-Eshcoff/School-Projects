@@ -1,0 +1,4 @@
+This is the pseudocode that lays out the basic structure for a payroll program. Testing proofs are shown in a separate file. 
+
+The structure is built on an iterative system, mainly consisting of for and while loops. Incorporating array structures, for integration with database and file systems. 
+Would be best implemented in actual code (from the ones I've personally worked with) using a python program that integrates scripts to run SQL queries.
