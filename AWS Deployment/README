@@ -1,0 +1,8 @@
+For my AWS Deployment, Ive created documentation in the form of a powerpoint.
+
+This powerpoint goes over each service utilized and the configuration of each asset for hosting of a website and managing the security, networking, and monitoring systems in place for 
+two Virtual Machines hosted on individual VPCs and subnets.
+
+The powerpoint goes into depth about each portion of the project. Along with understanding AWS deployment for VMs, VPCs, subnets, and such, there is also an EC2 instance for hosting a website.
+
+The class itself introduced all related concepts through an RDP session aligned with a Microsoft Azure subscription so I practiced all skills displayed in the AWS deployment there first before doing them on my own on AWS
